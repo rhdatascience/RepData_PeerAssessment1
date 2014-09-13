@@ -1,8 +1,8 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
+title: 'Reproducible Research: Peer Assessment 1'
+output:
   html_document:
-    keep_md: true
+    keep_md: yes
 ---
 
 ## Loading and preprocessing the data
@@ -12,22 +12,9 @@ Extracting the the zip file into the data folder.
 ```r
 library(stats)
 library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.1
-```
-
-```r
 library(grid)
 library(gridExtra)
-```
 
-```
-## Warning: package 'gridExtra' was built under R version 3.1.1
-```
-
-```r
 if(!file.exists("data"))
 {
         dir.create("data") 
