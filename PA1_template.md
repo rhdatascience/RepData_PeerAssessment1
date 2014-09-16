@@ -56,23 +56,33 @@ Plot the histogram that is expected by the assigment. This graph shows the frequ
 
 
 ```r
-plot <- ggplot(totalStepsPerDay, aes(x=steps))
-plot <- plot + geom_histogram(colour="black", fill="black")
-plot <- plot + labs(title = "Original dataset - Frequency of the total # of steps.")
-plot
-```
-
-```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+hist1 <- hist(totalStepsPerDay$steps, breaks=30, xlab="Total number of steps per day", main = "Histogram of total number of steps per day")
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
+```r
+plot <- ggplot(totalStepsPerDay, aes(x=steps))
+plot <- plot + geom_histogram(colour="black", fill="cyan")
+plot <- plot + labs(title = "Original dataset - Frequency of the total # of steps.")
+```
+
 Calculate the mean and the median number of steps for each day
 
 ```r
-mean <- mean(totalStepsPerDay$steps)
-median <- median(totalStepsPerDay$steps)
+mean <- mean(totalStepsPerDay$steps);mean
+```
+
+```
+## [1] 9354
+```
+
+```r
+median <- median(totalStepsPerDay$steps);median
+```
+
+```
+## [1] 10395
 ```
 
 The mean number of steps is 9354.2295.
@@ -91,8 +101,8 @@ names(meanStepsPerInterval) <- c("interval", "steps")
 Plot that shows the average number of steps during a day
 
 ```r
-p <- qplot(as.numeric(interval), steps, data = meanStepsPerInterval, geom = c("point", "line"))
-p + xlab("Interval") + ylab("Average number of steps.")
+p <- qplot(as.integer(interval), steps, data = meanStepsPerInterval)
+p + geom_line() + xlab("Interval") + ylab("Average number of steps.")
 ```
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
@@ -101,7 +111,20 @@ p + xlab("Interval") + ylab("Average number of steps.")
 
 ```r
 maxSteps <- max(meanStepsPerInterval$steps, na.rm = TRUE)
+maxSteps
+```
+
+```
+## [1] 206.2
+```
+
+```r
 maxInterval <- meanStepsPerInterval[which(meanStepsPerInterval$steps == maxSteps),]$interval
+maxInterval
+```
+
+```
+## [1] "0835"
 ```
 
 The time of the day with the highest number of steps on average is 0835
@@ -111,6 +134,11 @@ The time of the day with the highest number of steps on average is 0835
 
 ```r
 numberOfNAs <- sum(is.na(data$steps))
+numberOfNAs
+```
+
+```
+## [1] 2304
 ```
 
 There are 2304 NA values is the dataset.
@@ -140,6 +168,11 @@ for(date in daysWithAllNaIntervals) {
 
 ```r
 numNaValues <- sum(is.na(newData$steps))
+numNaValues
+```
+
+```
+## [1] 0
 ```
 
 The number of NA values is the data set is 0.
@@ -151,7 +184,20 @@ newTotalStepsPerDay <- aggregate(newData$steps, list(newData$date), sum, na.rm=F
 names(newTotalStepsPerDay) <- c("date", "steps")
 
 newMean <- mean(newTotalStepsPerDay$steps)
+newMean
+```
+
+```
+## [1] 10766
+```
+
+```r
 newMedian <- median(newTotalStepsPerDay$steps)
+newMedian
+```
+
+```
+## [1] 10766
 ```
 
 The mean number of steps is 1.0766 &times; 10<sup>4</sup>.
@@ -161,7 +207,7 @@ Creating the new histogram
 
 ```r
 plot2 <- ggplot(newTotalStepsPerDay, aes(x=steps))
-plot2 <- plot2 + geom_histogram(colour="black", fill="black");
+plot2 <- plot2 + geom_histogram(colour="black", fill="cyan");
 plot2 <- plot2 + labs(title = "New dataset - Frequency of the total # of steps.")
 ```
 
